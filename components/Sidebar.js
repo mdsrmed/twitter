@@ -47,7 +47,7 @@ export default function Sidebar() {
                 <h4 className = "font-bold">shaheed</h4>
                 <p className = "text-gray-500">@mdshohidurrahman</p>
             </div>
-            <DotsHorizontalIcon className = "h-5 mt-4 xl:ml-8 hidden xl:inline"/>
+            <DotsHorizontalIcon className = "h-5 mt-3.5 xl:ml-8 hidden xl:inline"/>
            
         </div>
     </div>
