@@ -40,7 +40,7 @@ export default function Sidebar() {
 
             <img  src ="https://i.pinimg.com/564x/ba/6e/26/ba6e2651a161b6c7d270845a82f888d9.jpg" 
             alt= "user-img" 
-            className = "h-10 w-10 rounded-full xl:mr-2"
+            className = "h-11 w-11 rounded-full xl:mr-2"
             />
 
             <div className = "leading-5 hidden xl:inline">
