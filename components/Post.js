@@ -27,7 +27,7 @@ export default function Post({post}) {
             {/* bottom icons*/}
             <div className = "flex justify-between text-gray-500 p-2"> 
                 <ChatIcon className = "h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100"/>
-                <TrashIcon className = "h-9 w-9 hoverEffect p-2 hover:text-red-500 hover:bg-red-100"/>
+                <TrashIcon className = "h-9 w-9 hoverEffect p-2 hover:text-red-500 hover:b-red-100"/>
                 <HeartIcon className = "h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100"/>
                 <ShareIcon className = "h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100"/>
                 <ChartBarIcon className = "h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100"/>
