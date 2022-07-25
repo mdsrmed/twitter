@@ -8,7 +8,7 @@ export default function Post({post}) {
         <img src={post.userImg} alt = "user-img" className = "w-11 h-11 rounded-full mr-4" />
         <div> 
             {/* header */}
-            <div className = "flex items-certer justify-between"> 
+            <div className = "flex items-center justify-between"> 
                 {/* userinfo */}
                 <div className = "flex items-center space-x-1.5 whitespace-nowrap"> 
                     <h4 className = "font-bold test-[15px] sm:text-[16px] hover:underline"> {post.name}</h4>
