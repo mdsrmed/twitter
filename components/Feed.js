@@ -1,11 +1,29 @@
 import { SparklesIcon } from "@heroicons/react/outline";
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  Query,
+  query,
+} from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { db } from "../firebase";
 import Input from "./Input";
 import Post from "./Post";
 
-
 export default function Feed() {
-
-  const posts = [
+  const [posts, setPosts] = useState([]);
+  useEffect(
+    () =>
+      onSnapshot(
+        query(collection(db, "posts"), orderBy("timestamp", "desc")),
+        (snapshot) => {
+          setPosts(snapshot.docs);
+        }
+      ),
+    []
+  );
+  /*const posts = [
     {
       id : "1",
       name : "Md Shohidur Rahman",
@@ -24,21 +42,21 @@ export default function Feed() {
       text : "antique",
       timestamp : "2 hours ago"
     },
-  ]
+  ]*/
   return (
-    <div className = "xl:ml-[370px] border-l border-r border-gray-200 xl:min-w-[580px] sm:ml-[73px] flex-grow max-w-xl">
-        <div className = "flex justify-between py-2 px-3 sticky top-0 z-50 bg-white border-b border-gray-200"> 
-            <h2 className = "text-lg sm:text-xl font-bold cursor-pointer p-1">Home</h2>
-            <div className = "hoverEffect flex items-center justify-center px-0 w-9 h-9">
-                <SparklesIcon className = "h-5" />
-            </div>
+    <div className="xl:ml-[370px] border-l border-r border-gray-200 xl:min-w-[580px] sm:ml-[73px] flex-grow max-w-xl">
+      <div className="flex justify-between py-2 px-3 sticky top-0 z-50 bg-white border-b border-gray-200">
+        <h2 className="text-lg sm:text-xl font-bold cursor-pointer p-1">
+          Home
+        </h2>
+        <div className="hoverEffect flex items-center justify-center px-0 w-9 h-9">
+          <SparklesIcon className="h-5" />
         </div>
-        <Input/>
-        {posts.map((post)=> (
-           <Post key={post.id} post={post}/>
-        ))}
-        
-
+      </div>
+      <Input />
+      {posts.map((post) => (
+        <Post key={post.id} post={post} />
+      ))}
     </div>
-  )
+  );
 }
