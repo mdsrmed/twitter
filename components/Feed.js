@@ -12,7 +12,7 @@ import { db } from "../firebase";
 import Input from "./Input";
 import Post from "./Post";
 
-export default function Feed({ post }) {
+export default function Feed() {
   const [posts, setPosts] = useState([]);
   useEffect(
     () =>
@@ -56,17 +56,17 @@ export default function Feed({ post }) {
       </div>
       <Input />
       <AnimatePresence>
-        <motion.div
-          key={post.id}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
-        >
-          {posts.map((post) => (
+        {posts.map((post) => (
+          <motion.div
+            key={post.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+          >
             <Post key={post.id} post={post} />
-          ))}
-        </motion.div>
+          </motion.div>
+        ))}
       </AnimatePresence>
     </div>
   );
