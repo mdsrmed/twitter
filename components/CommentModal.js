@@ -11,6 +11,7 @@ import { db } from "../firebase";
 import { doc, onSnapshot } from "firebase/firestore";
 import Moment from "react-moment";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function CommentModal() {
   const [open, setOpen] = useRecoilState(modalState);
@@ -18,7 +19,20 @@ export default function CommentModal() {
   const [post, setPost] = useState({});
   const [input, setInput] = useState("");
   const { data: session } = useSession();
-  function sendComment() {}
+  const router = useRouter();
+  async function sendComment() {
+    await assDoc(collection(db, "posts", postId, "comments"), {
+      comment: input,
+      name: session.user.name,
+      username: session.user.username,
+      userImg: session.user.image,
+      timestamp: serverTimestamp(),
+    });
+
+    setOpen(false);
+    setInput("");
+    router.push(`posts/${postId}`);
+  }
   useEffect(() => {
     onSnapshot(doc(db, "posts", postId), (snapshot) => {
       setPost(snapshot);
@@ -46,33 +60,36 @@ export default function CommentModal() {
               <div className="p-2 flex items-center space-x-1 relative">
                 <span className="w-0.5 h-full z-[-1] absolute left-8 top-11 bg-gray-300" />
                 <img
-                  src={post?.data()?.userImg}
+                  //src={post?.data()?.userImg}
                   alt="user-img"
                   className="w-11 h-11 rounded-full mr-4"
                 />
                 <h4 className="font-bold test-[15px] sm:text-[16px] hover:underline">
                   {" "}
-                  {post?.data()?.name}
+                  {/*{post?.data()?.name}*/}
                 </h4>
                 <span className="text-sm sm:text-[15px]">
                   {" "}
-                  @{post?.data()?.username} -
+                  {/*@{post?.data()?.username} -*/}
                 </span>
                 <span className="text-sm sm:text-[15px] hover:underline">
                   {" "}
-                  <Moment fromNow>{post?.data()?.timestamp?.toDate()} </Moment>
+                  <Moment fromNow>
+                    {/*{post?.data()?.timestamp?.toDate()}*/}{" "}
+                  </Moment>
                 </span>
               </div>
               <p className="text-gray-500 text-[15px] sm:text-[16px] ml-16 mb-2">
-                {post?.data()?.text}
+                {/*{post?.data()?.text}*/}
               </p>
 
               <div className="flex p-3 space-x-3">
-                <img
-                  src={session.user.image}
+                {/*<img
+                
+                  {/*src={session.user.image}*
                   alt="user-img"
                   className="h-11 w-11 cursor-pointer hover:brightness-95 rounded-full m-2"
-                />
+                />*/}
 
                 <div className="w-full divide-y divide-gray-200">
                   <div>
