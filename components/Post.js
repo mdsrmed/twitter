@@ -22,14 +22,16 @@ import { deleteObject, ref } from "firebase/storage";
 import { useRecoilState } from "recoil";
 import { modalState, postIdState } from "../atom/modalAtom";
 import { comment } from "postcss";
+import { useRouter } from "next/router";
 
-export default function Post({ post }) {
+export default function Post({ post, id }) {
   const { data: session } = useSession();
   const [likes, setLikes] = useState([]);
   const [comments, setComments] = useState([]);
   const [hasLiked, setHasLiked] = useState(false);
   const [open, setOpen] = useRecoilState(modalState);
   const [postId, setPostId] = useRecoilState(postIdState);
+  const router = useRouter();
   useEffect(() => {
     setHasLiked(
       likes.findIndex((like) => like.id === session?.user.uid) !== -1
@@ -37,7 +39,7 @@ export default function Post({ post }) {
   }, [likes]);
   useEffect(() => {
     const unsubscribe = onSnapshot(
-      collection(db, "posts", post.id, "likes"),
+      collection(db, "posts", id, "likes"),
       (snapshot) => setLikes(snapshot.docs)
     );
   }, [db]);
@@ -51,9 +53,9 @@ export default function Post({ post }) {
   async function likePost() {
     if (session) {
       if (hasLiked) {
-        await deleteDoc(doc(db, "posts", post.id, "likes", session?.user.id));
+        await deleteDoc(doc(db, "posts", id, "likes", session?.user.id));
       } else {
-        await setDoc(doc(db, "posts", post.id, "likes", session.user.uid), {
+        await setDoc(doc(db, "posts", id, "likes", session.user.uid), {
           username: session.user.username,
         });
       }
@@ -64,10 +66,11 @@ export default function Post({ post }) {
 
   async function deletePost() {
     if (window.confirm("Are you sure")) {
-      deleteDoc(doc(db, "posts", post.id));
+      deleteDoc(doc(db, "posts", id));
       if (post.data().image) {
-        deleteObject(ref(storage, `posts/${post.id}/image`));
+        deleteObject(ref(storage, `posts/${id}/image`));
       }
+      router.push("/");
     }
   }
   return (
@@ -119,7 +122,7 @@ export default function Post({ post }) {
                 if (!session) {
                   signIn();
                 } else {
-                  setPostId(post.id);
+                  setPostId(id);
                   setOpen(!open);
                 }
               }}
